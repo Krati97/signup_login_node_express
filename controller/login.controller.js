@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../models/userModel.js";
+import { findUser } from "../service/login.service.js";
 import { errorMessage, formValidation } from "../validator/user.validate.js";
 import { comparePassword } from "../auth/user.auth.js";
 
@@ -8,8 +8,9 @@ export const loginUser = async (req, res) => {
   const userInfo = req.body;
   try {
     if (formValidation(userInfo)) {
+      const { email, password } = userInfo;
       //Check for existing user
-      const user = await User.findOne({ email: userInfo.email });
+      const user = await findUser(email);
 
       //If no user is present
       if (!user) {
@@ -20,15 +21,15 @@ export const loginUser = async (req, res) => {
       }
 
       //Check for valid user password
-      comparePassword(userInfo.password, user.password)
+      comparePassword(password, user.password)
         .then((response) => {
           //Correct password
           if (response) {
             //Login user
             const token = jwt.sign(
               {
-                _id: user._id, 
-                name: user.name 
+                _id: user._id,
+                name: user.name,
               },
               process.env.JWT_SECRET_KEY
             );
