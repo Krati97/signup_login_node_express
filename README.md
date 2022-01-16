@@ -14,13 +14,13 @@ nodemon server.js
 ### API End Points:
 POST
 1. Register(Sign Up) : /user/register
- -name (mandatory)
- -email (mandatory)
- -password (mandatory)
- -confirmPassword (mandatory)
- -address
- -age
+ - name (mandatory)
+ - email (mandatory)
+ - password (mandatory)
+ - confirmPassword (mandatory)
+ - address
+ - age
 2. Login: /user/login
- -email (mandatory)
- -password (mandatory)
+ - email (mandatory)
+ - password (mandatory)
 
